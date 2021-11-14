@@ -89,13 +89,8 @@ jobs:
 
     - name: Building
       run: |
-        PATH=~/bin:$PATH
-        cd ${{ steps.pwd.outputs.pwd }}
-        export ALLOW_MISSING_DEPENDENCIES=true
-        source build/envsetup.sh
-        lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
         make clean
-        make recoveryimage -j$(nproc --all)
+        . build/envsetup.sh && lunch twrp_Wasp-eng && export ALLOW_MISSING_DEPENDENCIES=true && mka recoveryimage -j$(nproc --all)
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
