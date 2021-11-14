@@ -96,18 +96,21 @@ jobs:
         lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
         make clean
         make recoveryimage -j$(nproc --all)
- 
+
     - name: Upload to Release
-    - uses: actions/upload-artifact@v2
-    with:
-          name: recoveryzip
-          path: work/out/target/product/*/*.zip
-    - uses: actions/upload-artifact@v2
-   with:
-          name: bootimage
-          path: work/out/target/product/*/*.img
-          
-       - uses: actions/upload-artifact@v2
-         with:
-          name: recoveryimage
-          path: work/out/target/product/*/*.img
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |       
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img    
+        name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+        body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
+        uses: actions/upload-artifact@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.small }}
+#        name: recoveryzip
+        path: work/out/target/product/*/*.zip
+
+#name2: recoveryimage
+#    path: work/out/target/product/*/*.img
+
