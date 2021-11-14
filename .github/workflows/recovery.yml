@@ -89,7 +89,6 @@ jobs:
 
     - name: Building
       run: |
-        make clean
         . build/envsetup.sh && lunch twrp_Wasp-eng && export ALLOW_MISSING_DEPENDENCIES=true && mka recoveryimage -j$(nproc --all)
 
     - name: Upload to Release
