@@ -96,5 +96,18 @@ jobs:
         lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
         make clean
         make recoveryimage -j$(nproc --all)
-
-
+ 
+    - name: Upload to Release
+    - uses: actions/upload-artifact@v2
+    with:
+          name: recoveryzip
+          path: work/out/target/product/*/*.zip
+    - uses: actions/upload-artifact@v2
+   with:
+          name: bootimage
+          path: work/out/target/product/*/*.img
+          
+       - uses: actions/upload-artifact@v2
+         with:
+          name: recoveryimage
+          path: work/out/target/product/*/*.img
