@@ -91,7 +91,7 @@ jobs:
       run: |
 
         cd ${{ steps.pwd.outputs.pwd }}
-        export ALLOW_MISSING_DEPENDENCIES=true; . build/envsetup.sh; lunch twrp_Wasp-eng; mka recoveryimage
+        export ALLOW_MISSING_DEPENDENCIES=true; . build/envsetup.sh; lunch twrp_Wasp-eng; mka recoveryimage -j$(nproc --all)
 
 
     - name: Upload to Release
